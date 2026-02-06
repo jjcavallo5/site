@@ -3,6 +3,7 @@ import "@/styles/global.css";
 import BottomNavLeftIcon from "./bottom-nav-left-icon.astro";
 import RightArrow from "./right-arrow.astro";
 import BottomNavRoute from "./bottom-nav-route.astro";
+import BottomNavDate from "./bottom-nav-date.astro";
 ---
 
 <nav class="mb-4 flex flex-row items-start h-[32px]">
@@ -30,4 +31,6 @@ import BottomNavRoute from "./bottom-nav-route.astro";
     icon="nf-oct-workflow"
     isActive={Astro.url.pathname.startsWith("/projects")}
   />
+  <div class="flex-1"></div>
+  <BottomNavDate />
 </nav>

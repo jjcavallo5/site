@@ -1,0 +1,16 @@
+---
+import LeftArrow from "./left-arrow.astro";
+
+const date = new Date();
+---
+
+<span class="h-full flex flex-row items-center text-fg text-lg">
+  <LeftArrow className="border-r-blue-muted" />
+  <span class="bg-blue-muted h-full pr-2 pl-1">
+    <i class="nf nf-md-calendar_month h-full bg-blue-muted"></i>
+  </span>
+  <LeftArrow
+    className="border-t-blue-muted border-b-blue-muted border-r-dark-gray"
+  />
+  <span class="h-full bg-dark-gray flex items-center pr-4">10/10/2025</span>
+</span>

@@ -1,8 +1,24 @@
 ---
 import "@/styles/global.css";
 import BottomNavLeftIcon from "./bottom-nav-left-icon.astro";
+import RightArrow from "./right-arrow.astro";
+import BottomNavRoute from "./bottom-nav-route.astro";
 ---
 
 <nav class="mb-4 flex flex-row items-start h-[32px]">
   <BottomNavLeftIcon />
+  <RightArrow className="border-l-green" />
+  <BottomNavRoute name="home" href="/" index={1} icon="nf-seti-home" />
+  <BottomNavRoute
+    name="blog"
+    href="/blog"
+    index={2}
+    icon="nf-fa-pencil_square_o"
+  />
+  <BottomNavRoute
+    name="projects"
+    href="/projects"
+    index={3}
+    icon="nf-oct-workflow"
+  />
 </nav>

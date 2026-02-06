@@ -1,0 +1,29 @@
+---
+import RightArrow from "./right-arrow.astro";
+import { cn } from "@/lib/utils";
+
+interface Props {
+  index: number;
+  name: string;
+  href: string;
+  icon?: string;
+}
+
+const { index, name, href, icon } = Astro.props;
+---
+
+<a href={href} class="flex flex-row h-full items-center">
+  <RightArrow className="border-t-light-gray border-b-light-gray" />
+  <span class="flex flex-row bg-light-gray pl-2 pr-1 h-full items-center">
+    <p class="font-bold text-fg">{index}</p></span
+  >
+  <RightArrow
+    className="border-t-dark-gray border-b-dark-gray border-l-light-gray"
+  />
+  <span class="bg-dark-gray h-full flex flex-row items-center">
+    <i class={cn("nf nf-dev-terminal text-fg text-lg ml-2 font-bold", icon)}
+    ></i>
+    <p class="ml-4 mr-2 text-lg text-fg">{name}</p>
+  </span>
+  <RightArrow className="border-l-dark-gray" />
+</a>

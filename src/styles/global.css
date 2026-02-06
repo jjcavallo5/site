@@ -5,6 +5,8 @@
   --color-bg: #1a1b26;
   --color-fg: #c0caf5;
   --color-green: #9ece6a;
+  --color-light-gray: #394b70;
+  --color-dark-gray: #283457;
   --font-mono: 'FiraCode Nerd Font', ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 

@@ -1,1 +1,24 @@
-@import 'tailwindcss'
+@import 'tailwindcss';
+
+@theme {
+  --color-bg: #1a1b26;
+  --color-fg: #c0caf5;
+}
+
+@font-face {
+  font-family: 'FiraCode Nerd Font';
+  src: url('/fonts/FiraCodeNerdFont-Regular.ttf') format('ttf'),
+       url('/fonts/FiraCodeNerdFont-Regular.ttf') format('ttf');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'FiraCode Nerd Font';
+  src: url('/fonts/FiraCodeNerdFont-Bold.ttf') format('ttf'),
+       url('/fonts/FiraCodeNerdFont-Bold.ttf') format('ttf');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}

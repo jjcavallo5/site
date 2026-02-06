@@ -1,6 +1,7 @@
 ---
 import "@/styles/global.css";
 import GithubGraph from "./home/github-graph";
+import RecentBlogs from "./home/recent-blogs.astro";
 ---
 
 <main
@@ -16,6 +17,7 @@ import GithubGraph from "./home/github-graph";
   <section id="links" class="flex flex-row w-full">
     <section id="blog-posts" class="flex-1 p-8">
       <h2 class="text-xl text-teal italic font-bold">Recent Blog Posts</h2>
+      <RecentBlogs />
     </section>
     <section
       id="projects"

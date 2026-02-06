@@ -1,10 +1,23 @@
 ---
 import LeftArrow from "./left-arrow.astro";
+import { cn } from "@/lib/utils";
+
+interface Props {
+  className?: string;
+}
+
+const { className } = Astro.props;
 
 const date = new Date();
+const formattedDate = date.toLocaleDateString("en-US", {
+  month: "short",
+  day: "2-digit",
+});
 ---
 
-<span class="h-full flex flex-row items-center text-fg text-lg">
+<span
+  class={cn("h-full flex flex-row items-center text-fg text-lg", className)}
+>
   <LeftArrow className="border-r-blue-muted" />
   <span class="bg-blue-muted h-full pr-2 pl-1">
     <i class="nf nf-md-calendar_month h-full bg-blue-muted"></i>
@@ -12,5 +25,88 @@ const date = new Date();
   <LeftArrow
     className="border-t-blue-muted border-b-blue-muted border-r-dark-gray"
   />
-  <span class="h-full bg-dark-gray flex items-center pr-4">10/10/2025</span>
+  <span class="h-full bg-dark-gray flex items-center pr-2">
+    <p>{formattedDate},</p></span
+  >
+  <span id="live-time" class="h-full bg-dark-gray flex items-center pr-4"
+  ></span>
 </span>
+
+<style is:global>
+  .time-char {
+    display: inline-block;
+    transition: none;
+  }
+  .time-char.flip {
+    animation: flip 0.3s ease-in-out;
+  }
+  @keyframes flip {
+    0% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    40% {
+      transform: translateY(-40%);
+      opacity: 0;
+    }
+    60% {
+      transform: translateY(40%);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+</style>
+
+<script>
+  function formatTime(date: Date): string {
+    let hours = date.getHours();
+    const minutes = date.getMinutes();
+    const suffix = hours >= 12 ? "pm" : "am";
+    hours = hours % 12 || 12;
+    return `${hours}:${minutes.toString().padStart(2, "0")}${suffix}`;
+  }
+
+  const el = document.getElementById("live-time")!;
+  let prev = "";
+
+  function update() {
+    const now = formatTime(new Date());
+    if (now === prev) return;
+
+    const chars = now.split("");
+    const prevChars = prev.split("");
+
+    if (!el.children.length) {
+      el.innerHTML = chars
+        .map((c) => `<span class="time-char">${c}</span>`)
+        .join("");
+    } else {
+      chars.forEach((c, i) => {
+        const span = el.children[i] as HTMLElement | undefined;
+        if (!span) {
+          const newSpan = document.createElement("span");
+          newSpan.className = "time-char";
+          newSpan.textContent = c;
+          el.appendChild(newSpan);
+        } else if (c !== prevChars[i]) {
+          span.textContent = c;
+          span.classList.remove("flip");
+          void span.offsetWidth;
+          span.classList.add("flip");
+        }
+      });
+      // Remove extra spans if new string is shorter
+      while (el.children.length > chars.length) {
+        el.removeChild(el.lastChild!);
+      }
+    }
+
+    prev = now;
+  }
+
+  update();
+  setInterval(update, 1000);
+</script>

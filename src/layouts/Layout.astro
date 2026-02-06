@@ -1,6 +1,7 @@
 ---
 import "@/styles/global.css";
 import BottomNav from "@/components/bottom-nav/bottom-nav.astro";
+import { ClientRouter } from "astro:transitions";
 ---
 
 <!doctype html>
@@ -12,6 +13,7 @@ import BottomNav from "@/components/bottom-nav/bottom-nav.astro";
     <link rel="icon" href="/favicon.ico" />
     <meta name="generator" content={Astro.generator} />
     <title>Astro Basics</title>
+    <ClientRouter />
   </head>
   <body
     class="flex flex-col m-0 w-screen h-screen font-mono bg-bg overflow-hidden"

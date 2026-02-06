@@ -34,3 +34,29 @@ import BottomNavDate from "./bottom-nav-date.astro";
   <div class="flex-1"></div>
   <BottomNavDate className="hidden lg:flex" />
 </nav>
+
+<script>
+  import { navigate } from "astro:transitions/client";
+
+  window.addEventListener("keydown", (e) => {
+    const isMac = navigator.platform.toUpperCase().includes("MAC");
+    const modifier = isMac ? e.metaKey : e.altKey;
+
+    if (!modifier) return;
+
+    switch (e.key) {
+      case "1":
+        e.preventDefault();
+        navigate("/");
+        break;
+      case "2":
+        e.preventDefault();
+        navigate("/blog");
+        break;
+      case "3":
+        e.preventDefault();
+        navigate("/projects");
+        break;
+    }
+  });
+</script>

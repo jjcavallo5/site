@@ -9,8 +9,22 @@
   --color-dark-gray: #283457;
   --color-purple: #bb9af7;
   --color-blue-muted: #3d59a1;
+  --color-yellow: #e0af68;
+  --color-teal: #2ac3de;
   --font-mono: 'FiraCode Nerd Font', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --animate-blink: blink 1s infinite;
+  @keyframes blink {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
+  }
 }
+
 
 @font-face {
   font-family: 'FiraCode Nerd Font';
@@ -55,3 +69,16 @@
 .nf {
   font-family: 'FiraCode Nerd Font', monospace;
 }
+
+@layer utilities {
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+}
+

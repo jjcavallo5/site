@@ -69,44 +69,54 @@ const formattedDate = date.toLocaleDateString("en-US", {
     return `${hours}:${minutes.toString().padStart(2, "0")}${suffix}`;
   }
 
-  const el = document.getElementById("live-time")!;
-  let prev = "";
+  let intervalId: number | undefined;
 
-  function update() {
-    const now = formatTime(new Date());
-    if (now === prev) return;
+  function initClock() {
+    if (intervalId) clearInterval(intervalId);
 
-    const chars = now.split("");
-    const prevChars = prev.split("");
+    const el = document.getElementById("live-time");
+    if (!el) return;
 
-    if (!el.children.length) {
-      el.innerHTML = chars
-        .map((c) => `<span class="time-char">${c}</span>`)
-        .join("");
-    } else {
-      chars.forEach((c, i) => {
-        const span = el.children[i] as HTMLElement | undefined;
-        if (!span) {
-          const newSpan = document.createElement("span");
-          newSpan.className = "time-char";
-          newSpan.textContent = c;
-          el.appendChild(newSpan);
-        } else if (c !== prevChars[i]) {
-          span.textContent = c;
-          span.classList.remove("flip");
-          void span.offsetWidth;
-          span.classList.add("flip");
+    let prev = "";
+
+    function update() {
+      const now = formatTime(new Date());
+      if (now === prev) return;
+
+      const chars = now.split("");
+      const prevChars = prev.split("");
+
+      if (!el!.children.length) {
+        el!.innerHTML = chars
+          .map((c) => `<span class="time-char">${c}</span>`)
+          .join("");
+      } else {
+        chars.forEach((c, i) => {
+          const span = el!.children[i] as HTMLElement | undefined;
+          if (!span) {
+            const newSpan = document.createElement("span");
+            newSpan.className = "time-char";
+            newSpan.textContent = c;
+            el!.appendChild(newSpan);
+          } else if (c !== prevChars[i]) {
+            span.textContent = c;
+            span.classList.remove("flip");
+            void span.offsetWidth;
+            span.classList.add("flip");
+          }
+        });
+        while (el!.children.length > chars.length) {
+          el!.removeChild(el!.lastChild!);
         }
-      });
-      // Remove extra spans if new string is shorter
-      while (el.children.length > chars.length) {
-        el.removeChild(el.lastChild!);
       }
+
+      prev = now;
     }
 
-    prev = now;
+    update();
+    intervalId = setInterval(update, 1000);
   }
 
-  update();
-  setInterval(update, 1000);
+  initClock();
+  document.addEventListener("astro:page-load", initClock);
 </script>

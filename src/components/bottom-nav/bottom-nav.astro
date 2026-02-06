@@ -4,9 +4,13 @@ import BottomNavLeftIcon from "./bottom-nav-left-icon.astro";
 import RightArrow from "./right-arrow.astro";
 import BottomNavRoute from "./bottom-nav-route.astro";
 import BottomNavDate from "./bottom-nav-date.astro";
+import TerminalPrompt from "../terminal-prompt.astro";
 ---
 
-<nav class="mb-4 flex flex-row items-start h-[32px]">
+<TerminalPrompt />
+<nav
+  class="md:mb-4 mt-2 no-scrollbar mb-8 flex flex-row items-start h-[32px] overflow-x-auto [&>*]:shrink-0"
+>
   <BottomNavLeftIcon />
   <RightArrow className="border-l-green" />
   <BottomNavRoute

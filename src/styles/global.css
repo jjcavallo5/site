@@ -1,14 +1,24 @@
 @import 'tailwindcss';
+@import './nerd-fonts-generated.css';
 
 @theme {
   --color-bg: #1a1b26;
   --color-fg: #c0caf5;
+  --color-green: #9ece6a;
+  --font-mono: 'FiraCode Nerd Font', ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 
 @font-face {
   font-family: 'FiraCode Nerd Font';
-  src: url('/fonts/FiraCodeNerdFont-Regular.ttf') format('ttf'),
-       url('/fonts/FiraCodeNerdFont-Regular.ttf') format('ttf');
+  src: url('/fonts/FiraCodeNerdFont-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'FiraCode Nerd Font';
+  src: url('/fonts/FiraCodeNerdFont-Regular.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -16,9 +26,28 @@
 
 @font-face {
   font-family: 'FiraCode Nerd Font';
-  src: url('/fonts/FiraCodeNerdFont-Bold.ttf') format('ttf'),
-       url('/fonts/FiraCodeNerdFont-Bold.ttf') format('ttf');
+  src: url('/fonts/FiraCodeNerdFont-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'FiraCode Nerd Font';
+  src: url('/fonts/FiraCodeNerdFont-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'FiraCode Nerd Font';
+  src: url('/fonts/FiraCodeNerdFont-Bold.ttf') format('truetype');
   font-weight: 700;
   font-style: normal;
   font-display: swap;
+}
+
+.nf {
+  font-family: 'FiraCode Nerd Font', monospace;
 }

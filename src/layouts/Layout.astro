@@ -1,5 +1,6 @@
 ---
 import "@/styles/global.css";
+import BottomNav from "@/components/bottom-nav/bottom-nav.astro";
 ---
 
 <!doctype html>
@@ -12,7 +13,12 @@ import "@/styles/global.css";
     <meta name="generator" content={Astro.generator} />
     <title>Astro Basics</title>
   </head>
-  <body class="m-0 w-screen h-screen font-mono">
-    <slot />
+  <body
+    class="flex flex-col m-0 w-screen h-screen font-mono bg-bg overflow-hidden"
+  >
+    <div class="flex-1">
+      <slot class="flex-1" />
+    </div>
+    <BottomNav />
   </body>
 </html>

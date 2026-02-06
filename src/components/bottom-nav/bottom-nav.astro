@@ -8,17 +8,26 @@ import BottomNavRoute from "./bottom-nav-route.astro";
 <nav class="mb-4 flex flex-row items-start h-[32px]">
   <BottomNavLeftIcon />
   <RightArrow className="border-l-green" />
-  <BottomNavRoute name="home" href="/" index={1} icon="nf-seti-home" />
+  <BottomNavRoute
+    name="home"
+    href="/"
+    index={1}
+    icon="nf-seti-home"
+    isActive={!Astro.url.pathname.startsWith("/blog") &&
+      !Astro.url.pathname.startsWith("/projects")}
+  />
   <BottomNavRoute
     name="blog"
     href="/blog"
     index={2}
     icon="nf-fa-pencil_square_o"
+    isActive={Astro.url.pathname.startsWith("/blog")}
   />
   <BottomNavRoute
     name="projects"
     href="/projects"
     index={3}
     icon="nf-oct-workflow"
+    isActive={Astro.url.pathname.startsWith("/projects")}
   />
 </nav>

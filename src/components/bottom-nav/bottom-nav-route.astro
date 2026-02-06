@@ -6,24 +6,42 @@ interface Props {
   index: number;
   name: string;
   href: string;
+  isActive: boolean;
   icon?: string;
 }
 
-const { index, name, href, icon } = Astro.props;
+const { index, name, href, isActive, icon } = Astro.props;
 ---
 
 <a href={href} class="flex flex-row h-full items-center">
-  <RightArrow className="border-t-light-gray border-b-light-gray" />
-  <span class="flex flex-row bg-light-gray pl-2 pr-1 h-full items-center">
-    <p class="font-bold text-fg">{index}</p></span
+  <RightArrow
+    className={isActive
+      ? "border-t-purple border-b-purple"
+      : "border-t-light-gray border-b-light-gray"}
+  />
+  <span
+    class={cn(
+      "flex flex-row pl-2 pr-1 h-full items-center",
+      isActive ? "bg-purple text-bg" : "bg-light-gray text-fg",
+    )}
+  >
+    <p class="font-bold">{index}</p></span
   >
   <RightArrow
-    className="border-t-dark-gray border-b-dark-gray border-l-light-gray"
+    className={isActive
+      ? "border-purple/85 border-purple/85 border-l-purple"
+      : "border-t-dark-gray border-b-dark-gray border-l-light-gray"}
   />
-  <span class="bg-dark-gray h-full flex flex-row items-center">
-    <i class={cn("nf nf-dev-terminal text-fg text-lg ml-2 font-bold", icon)}
-    ></i>
-    <p class="ml-4 mr-2 text-lg text-fg">{name}</p>
+  <span
+    class={cn(
+      "h-full flex flex-row items-center",
+      isActive ? "bg-purple/85 text-bg" : "bg-dark-gray text-fg",
+    )}
+  >
+    <i class={cn("nf nf-dev-terminal text-lg ml-2 font-bold", icon)}></i>
+    <p class="ml-4 mr-2 text-lg">{name}</p>
   </span>
-  <RightArrow className="border-l-dark-gray" />
+  <RightArrow
+    className={isActive ? "border-l-purple/85" : "border-l-dark-gray"}
+  />
 </a>

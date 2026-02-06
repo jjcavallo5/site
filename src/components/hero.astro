@@ -1,9 +1,27 @@
 ---
 import "@/styles/global.css";
+import GithubGraph from "./home/github-graph";
 ---
 
-<main>
-  <section id="hero">
-    <section id="links"></section>
+<main
+  class="flex flex-col items-center justify-center w-full max-w-[1280px] justify-self-center"
+>
+  <section
+    id="hero"
+    class="flex flex-col p-8 border-dashed border-b-[1px] border-dark-gray w-full"
+  >
+    <h1 class="text-3xl text-purple italic font-bold">Jeremy Cavallo</h1>
+    <GithubGraph />
+  </section>
+  <section id="links" class="flex flex-row w-full">
+    <section id="blog-posts" class="flex-1 p-8">
+      <h2 class="text-xl text-teal italic font-bold">Recent Blog Posts</h2>
+    </section>
+    <section
+      id="projects"
+      class="flex-1 p-8 border-dashed border-l-[1px] border-dark-gray w-full"
+    >
+      <h2 class="text-xl text-teal italic font-bold">Projects</h2>
+    </section>
   </section>
 </main>

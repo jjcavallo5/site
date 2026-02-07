@@ -6,7 +6,7 @@ const repos = await fetchRecentRepositories(3);
 
 <ul>
   <li class="flex flex-row justify-between items-center group my-4 gap-2">
-    <a href="https://contractory-app.com" class="flex flex-col">
+    <a href="https://contractory-app.com" target="_blank" class="flex flex-col">
       <h4
         class="text-lg text-fg group-hover:text-purple ease-in-out transition duration-500"
         transition:name="blog-title"
@@ -25,7 +25,7 @@ const repos = await fetchRecentRepositories(3);
   {
     repos.map((repo, idx) => (
       <li class="flex flex-row justify-between items-center group my-4 gap-2">
-        <a href={repo.url} class="flex flex-col">
+        <a href={repo.url} target="_blank" class="flex flex-col">
           <h4
             class="text-lg text-fg group-hover:text-purple ease-in-out transition duration-500"
             transition:name="blog-title"

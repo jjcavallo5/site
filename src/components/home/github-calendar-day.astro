@@ -1,6 +1,6 @@
 ---
 import type { ContributionCalendarDay } from "@/lib/github";
-import { cn, formatDate } from "@/lib/utils";
+import { cn, formatGithubDate } from "@/lib/utils";
 interface Props extends ContributionCalendarDay {}
 
 const { contributionCount, contributionLevel, date } = Astro.props;
@@ -13,7 +13,7 @@ const getColor = () => {
   return "bg-purple";
 };
 
-const tooltip = `${contributionCount} contributions on ${formatDate(new Date(date))}`;
+const tooltip = `${contributionCount} contributions on ${formatGithubDate(date)}`;
 ---
 
 <div

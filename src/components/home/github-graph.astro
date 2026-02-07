@@ -1,13 +1,16 @@
 ---
 import { fetchGitHubContributions } from "@/lib/github";
+import { cn, formatGithubDate } from "@/lib/utils";
 import GithubCalendarDay from "./github-calendar-day.astro";
 const contributions = await fetchGitHubContributions();
 ---
 
 <div class="mt-4">
-  <p class="text-fg-muted mb-2">
-    {contributions?.contributionCalendar.totalContributions ?? 0} contributions in
-    the past year
+  <p class="text-fg mb-2">
+    {
+      contributions?.contributionCalendar.totalContributions.toLocaleString() ??
+        0
+    } contributions in the past year
   </p>
   <div class="relative">
     <div
@@ -15,14 +18,29 @@ const contributions = await fetchGitHubContributions();
       class="hidden text-fg text-sm bg-dark-gray rounded-sm px-2 py-1 absolute z-10 pointer-events-none whitespace-nowrap"
     >
     </div>
-    <div class="flex flex-row gap-[4px] overflow-x-auto">
+    <div class="flex flex-row overflow-x-auto">
       {
-        contributions?.contributionCalendar.weeks.map((week) => (
-          <div class="flex flex-col gap-[4px] shrink-0">
-            {week.contributionDays.map((day) => (
-              <GithubCalendarDay {...day} />
-            ))}
-          </div>
+        contributions?.contributionCalendar.weeks.map((week, idx) => (
+          <>
+            <div
+              class={cn(
+                "flex flex-col gap-[4px] shrink-0",
+                idx === contributions.contributionCalendar.weeks.length - 1
+                  ? "w-[16px]"
+                  : "w-[20px]",
+              )}
+            >
+              {week.contributionDays.map((day) => (
+                <GithubCalendarDay {...day} />
+              ))}
+              {Number.parseInt(week.contributionDays[0].date.slice(-2)) <= 7 &&
+                idx !== contributions.contributionCalendar.weeks.length - 1 && (
+                  <p class="text-fg-muted">
+                    {formatGithubDate(week.firstDay).split(" ")[0]}
+                  </p>
+                )}
+            </div>
+          </>
         ))
       }
     </div>

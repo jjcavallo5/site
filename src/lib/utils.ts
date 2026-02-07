@@ -12,3 +12,8 @@ export function formatDate(date: Date) {
     year: "numeric",
   });
 }
+
+export function formatGithubDate(dateString: string) {
+  const [y, m, d] = dateString.split("-").map(Number);
+  return formatDate(new Date(y, m - 1, d));
+}

@@ -15,11 +15,15 @@ const contributions = await fetchGitHubContributions();
       class="hidden text-fg text-sm bg-dark-gray rounded-sm px-2 py-1 absolute z-10 pointer-events-none whitespace-nowrap"
     >
     </div>
-    <div class="flex flex-col flex-wrap gap-[4px] h-[140px] overflow-x-auto">
+    <div class="flex flex-row gap-[4px] overflow-x-auto">
       {
-        contributions?.contributionCalendar.weeks.map((week) =>
-          week.contributionDays.map((day) => <GithubCalendarDay {...day} />),
-        )
+        contributions?.contributionCalendar.weeks.map((week) => (
+          <div class="flex flex-col gap-[4px]">
+            {week.contributionDays.map((day) => (
+              <GithubCalendarDay {...day} />
+            ))}
+          </div>
+        ))
       }
     </div>
   </div>

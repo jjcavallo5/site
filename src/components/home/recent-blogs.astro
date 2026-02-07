@@ -9,7 +9,7 @@ const posts = (await getCollection("blog")).sort(
 <ul>
   {
     posts.map((post, idx) => (
-      <li class="flex flex-row justify-between items-center group my-4">
+      <li class="flex flex-row justify-between items-center group my-4 gap-2">
         <a href={`/blog/${post.id}`} class="flex flex-col">
           <h4
             class="text-lg text-fg group-hover:text-purple ease-in-out transition duration-500"

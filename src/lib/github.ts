@@ -40,6 +40,30 @@ export interface ContributionsCollection {
   contributionYears: number[];
 }
 
+export interface RepositoryLanguage {
+  name: string;
+  color: string;
+}
+
+export interface RepositoryOwner {
+  login: string;
+  url: string;
+}
+
+export interface Repository {
+  name: string;
+  nameWithOwner: string;
+  description: string | null;
+  url: string;
+  stargazerCount: number;
+  forkCount: number;
+  primaryLanguage: RepositoryLanguage | null;
+  owner: RepositoryOwner;
+  isPrivate: boolean;
+  isFork: boolean;
+  updatedAt: string;
+}
+
 interface GitHubContributionsResponse {
   data: {
     viewer: {
@@ -112,4 +136,86 @@ export async function fetchGitHubContributions(): Promise<ContributionsCollectio
   }
 
   return json.data.viewer.contributionsCollection;
+}
+
+interface GitHubRepositoriesResponse {
+  data: {
+    viewer: {
+      repositoriesContributedTo: {
+        nodes: Repository[];
+      };
+    };
+  };
+  errors?: { message: string }[];
+}
+
+const recentReposQuery = `query($count: Int!) {
+  viewer {
+    repositoriesContributedTo(
+      first: $count
+      includeUserRepositories: true
+      contributionTypes: [COMMIT, PULL_REQUEST, ISSUE, PULL_REQUEST_REVIEW]
+      orderBy: { field: PUSHED_AT, direction: DESC }
+    ) {
+      nodes {
+        name
+        nameWithOwner
+        description
+        url
+        stargazerCount
+        forkCount
+        primaryLanguage {
+          name
+          color
+        }
+        owner {
+          login
+          url
+        }
+        isPrivate
+        isFork
+        updatedAt
+      }
+    }
+  }
+}`;
+
+export async function fetchRecentRepositories(
+  count: number = 5,
+): Promise<Repository[]> {
+  const token = import.meta.env.GITHUB_TOKEN;
+  if (!token) {
+    throw new Error("GITHUB_TOKEN environment variable is not set");
+  }
+
+  const res = await fetch("https://api.github.com/graphql", {
+    method: "POST",
+    headers: {
+      Authorization: `bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      query: recentReposQuery,
+      variables: { count: 100 },
+    }),
+  });
+
+  if (!res.ok) {
+    throw new Error(
+      `GitHub API request failed: ${res.status} ${res.statusText}`,
+    );
+  }
+
+  const json: GitHubRepositoriesResponse = await res.json();
+
+  if (json.errors) {
+    throw new Error(
+      `GitHub GraphQL errors: ${json.errors.map((e) => e.message).join(", ")}`,
+    );
+  }
+
+  return json.data.viewer.repositoriesContributedTo.nodes
+    .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt))
+    .filter((repo) => !repo.isPrivate)
+    .slice(0, count);
 }

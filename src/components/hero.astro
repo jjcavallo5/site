@@ -2,10 +2,11 @@
 import "@/styles/global.css";
 import GithubGraph from "./home/github-graph.astro";
 import RecentBlogs from "./home/recent-blogs.astro";
+import ProjectsList from "./home/projects-list.astro";
 ---
 
 <main
-  class="flex flex-col items-center justify-center w-full max-w-[1600px] justify-self-center"
+  class="flex flex-col items-center justify-center w-full max-w-[1120px] justify-self-center"
 >
   <section
     id="hero"
@@ -24,6 +25,7 @@ import RecentBlogs from "./home/recent-blogs.astro";
       class="flex-1 p-8 border-dashed sm:border-l-[1px] sm:border-t-[0px] border-t-[1px] border-dark-gray w-full"
     >
       <h2 class="text-xl text-teal italic font-bold">Projects</h2>
+      <ProjectsList />
     </section>
   </section>
 </main>

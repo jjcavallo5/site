@@ -2,7 +2,6 @@
 import { fetchGitHubContributions } from "@/lib/github";
 import GithubCalendarDay from "./github-calendar-day.astro";
 const contributions = await fetchGitHubContributions();
-console.log(contributions?.contributionCalendar.weeks[3].contributionDays);
 ---
 
 <div class="mt-4">
@@ -10,11 +9,44 @@ console.log(contributions?.contributionCalendar.weeks[3].contributionDays);
     {contributions?.contributionCalendar.totalContributions ?? 0} contributions in
     the past year
   </p>
-  <div class="flex flex-col flex-wrap gap-[4px] h-[140px] overflow-x-auto">
-    {
-      contributions?.contributionCalendar.weeks.map((week) =>
-        week.contributionDays.map((day) => <GithubCalendarDay {...day} />),
-      )
-    }
+  <div class="relative">
+    <div
+      id="github-tooltip"
+      class="hidden text-fg text-sm bg-dark-gray rounded-sm px-2 py-1 absolute z-10 pointer-events-none whitespace-nowrap"
+    >
+    </div>
+    <div class="flex flex-col flex-wrap gap-[4px] h-[140px] overflow-x-auto">
+      {
+        contributions?.contributionCalendar.weeks.map((week) =>
+          week.contributionDays.map((day) => <GithubCalendarDay {...day} />),
+        )
+      }
+    </div>
   </div>
 </div>
+
+<script>
+  const tooltip = document.getElementById("github-tooltip")!;
+  const container = tooltip.parentElement!;
+
+  container.addEventListener("mouseover", (e) => {
+    const day = (e.target as HTMLElement).closest(".github-day") as HTMLElement;
+    if (!day) return;
+    const text = day.dataset.tooltip;
+    if (!text) return;
+
+    tooltip.textContent = text;
+    tooltip.classList.remove("hidden");
+
+    const dayRect = day.getBoundingClientRect();
+    const containerRect = container.getBoundingClientRect();
+
+    tooltip.style.left = `${dayRect.left - containerRect.left + dayRect.width / 2 - tooltip.offsetWidth / 2}px`;
+    tooltip.style.top = `${dayRect.top - containerRect.top - tooltip.offsetHeight - 4}px`;
+  });
+
+  container.addEventListener("mouseout", (e) => {
+    const day = (e.target as HTMLElement).closest(".github-day");
+    if (day) tooltip.classList.add("hidden");
+  });
+</script>

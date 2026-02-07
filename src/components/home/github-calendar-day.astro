@@ -1,17 +1,23 @@
 ---
 import type { ContributionCalendarDay } from "@/lib/github";
-import { cn } from "@/lib/utils";
+import { cn, formatDate } from "@/lib/utils";
 interface Props extends ContributionCalendarDay {}
 
 const { contributionCount, contributionLevel, date } = Astro.props;
 
 const getColor = () => {
   if (contributionLevel === "NONE") return "bg-dark-gray";
-  if (contributionLevel === "FIRST_QUARTILE") return "bg-purple/25";
-  if (contributionLevel === "SECOND_QUARTILE") return "bg-purple/50";
-  if (contributionLevel === "THIRD_QUARTILE") return "bg-purple/75";
+  if (contributionLevel === "FIRST_QUARTILE") return "bg-purple/40";
+  if (contributionLevel === "SECOND_QUARTILE") return "bg-purple/60";
+  if (contributionLevel === "THIRD_QUARTILE") return "bg-purple/80";
   return "bg-purple";
 };
+
+const tooltip = `${contributionCount} contributions on ${formatDate(new Date(date))}`;
 ---
 
-<div class={cn("h-[16px] w-[16px] rounded-[2px]", getColor())}></div>
+<div
+  class={cn("h-[16px] w-[16px] rounded-[2px] github-day", getColor())}
+  data-tooltip={tooltip}
+>
+</div>

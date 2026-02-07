@@ -1,0 +1,20 @@
+---
+import { fetchGitHubContributions } from "@/lib/github";
+import GithubCalendarDay from "./github-calendar-day.astro";
+const contributions = await fetchGitHubContributions();
+console.log(contributions?.contributionCalendar.weeks[3].contributionDays);
+---
+
+<div class="mt-4">
+  <p class="text-fg-muted mb-2">
+    {contributions?.contributionCalendar.totalContributions ?? 0} contributions in
+    the past year
+  </p>
+  <div class="flex flex-col flex-wrap gap-[4px] h-[140px] overflow-x-auto">
+    {
+      contributions?.contributionCalendar.weeks.map((week) =>
+        week.contributionDays.map((day) => <GithubCalendarDay {...day} />),
+      )
+    }
+  </div>
+</div>

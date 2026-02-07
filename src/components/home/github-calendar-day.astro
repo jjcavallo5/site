@@ -1,0 +1,17 @@
+---
+import type { ContributionCalendarDay } from "@/lib/github";
+import { cn } from "@/lib/utils";
+interface Props extends ContributionCalendarDay {}
+
+const { contributionCount, contributionLevel, date } = Astro.props;
+
+const getColor = () => {
+  if (contributionLevel === "NONE") return "bg-dark-gray";
+  if (contributionLevel === "FIRST_QUARTILE") return "bg-purple/25";
+  if (contributionLevel === "SECOND_QUARTILE") return "bg-purple/50";
+  if (contributionLevel === "THIRD_QUARTILE") return "bg-purple/75";
+  return "bg-purple";
+};
+---
+
+<div class={cn("h-[16px] w-[16px] rounded-[2px]", getColor())}></div>

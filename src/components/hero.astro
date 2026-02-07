@@ -5,23 +5,23 @@ import RecentBlogs from "./home/recent-blogs.astro";
 ---
 
 <main
-  class="flex flex-col items-center justify-center w-full max-w-[1280px] justify-self-center"
+  class="flex flex-col items-center justify-center w-full max-w-[1600px] justify-self-center"
 >
   <section
     id="hero"
-    class="flex flex-col p-8 border-dashed border-b-[1px] border-dark-gray w-full"
+    class="flex flex-col p-8 border-dashed border-b-[1px] border-dark-gray"
   >
     <h1 class="text-3xl text-purple italic font-bold">Jeremy Cavallo</h1>
     <GithubGraph />
   </section>
-  <section id="links" class="flex flex-row w-full">
+  <section id="links" class="flex flex-col sm:flex-row w-full">
     <section id="blog-posts" class="flex-1 p-8">
       <h2 class="text-xl text-teal italic font-bold">Recent Blog Posts</h2>
       <RecentBlogs />
     </section>
     <section
       id="projects"
-      class="flex-1 p-8 border-dashed border-l-[1px] border-dark-gray w-full"
+      class="flex-1 p-8 border-dashed sm:border-l-[1px] sm:border-t-[0px] border-t-[1px] border-dark-gray w-full"
     >
       <h2 class="text-xl text-teal italic font-bold">Projects</h2>
     </section>

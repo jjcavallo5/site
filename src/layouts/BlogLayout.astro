@@ -1,0 +1,35 @@
+---
+import Layout from "./Layout.astro";
+import { cn, formatDate } from "@/lib/utils";
+
+interface Props {
+  title: string;
+  published: Date;
+  author: string;
+}
+
+const { title, published, author } = Astro.props;
+---
+
+<Layout>
+  <main class="h-full flex flex-col overflow-y-auto thin-scrollbar">
+    <div class="max-w-[85ch] self-center flex-1 px-2 mt-8 pb-32">
+      <h1 class="text-purple text-3xl italic font-bold">{title}</h1>
+      <p class="text-fg-muted">{author} &bull; {formatDate(published)}</p>
+      <div
+        class={cn(
+          "mt-4 max-w-none",
+          "prose prose-strong:text-fg",
+          "prose-h1:text-purple prose-h1:text-3xl prose-h1:italic prose-h2:font-bold",
+          "prose-h2:text-teal prose-h2:text-xl prose-h2:italic prose-h2:font-bold",
+          "prose-h3:text-fg prose-h3:text-xl prose-h3:italic",
+          "prose-p:text-fg",
+          "prose-a:text-fg prose-a:underline",
+          "prose-code:text-blue prose-code:italic",
+        )}
+      >
+        <slot />
+      </div>
+    </div>
+  </main>
+</Layout>

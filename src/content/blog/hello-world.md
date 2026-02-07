@@ -1,29 +1,37 @@
 ---
-title: 'My First Blog Post'
+layout: '../../layouts/BlogLayout.astro'
+title: 'Learning Astro'
 pubDate: 2026-02-06
-description: 'This is the first post of my new Astro blog.'
-author: 'Astro Learner'
-image:
-    url: 'https://docs.astro.build/assets/rose.webp'
-    alt: 'The Astro logo on a dark background with a pink glow.'
-tags: ["astro", "blogging", "learning in public"]
+description: 'Writing a blog about creating a blog'
+author: 'Jeremy Cavallo'
+tags: ["astro"]
 ---
-# My First Blog Post
 
-Published on: 2022-07-01
+A few months ago, I started writing blogs. I always hated writing when I was in school, but now
+I have a lot of thoughts about technology that I need to get out of my head and write them down somewhere.
+I think it'll be interesting to look back and see what I was thinking about in the future.
 
-Welcome to my _new blog_ about learning Astro! Here, I will share my learning journey as I build a new website.
+A few months back, I started writing blogs on a service called [Ghost](https://ghost.org/). They're great, but also,
+I don't feel like spending money on a blog. I think I'm good enough a programmer to build it
+myself, and so today, I sat down and started to do just that.
 
-## What I've accomplished
+## What is Astro?
 
-1. **Installing Astro**: First, I created a new Astro project and set up my online accounts.
+Astro is a web framework specifically built for building statically hosted websites - perfect
+for a blog. In fact, the initial tutorial in their documentation is all about building a personal
+blog website, so I didn't have to dig very deep to get started!
 
-2. **Making Pages**: I then learned how to make pages by creating new `.astro` files and placing them in the `src/pages/` folder.
+Modern frameworks like [NextJS](https://nextjs.org), [Tanstack Start](https://tanstack.com/start/latest), [Svelte](https://svelte.dev/),
+and many others are mostly focused on building web applications. These are perfect for highly-complex
+sites, such as my company [Contractory](https://contractory-app.com). However, these frameworks are notorious
+for slowing down the browser by loading a _lot_ of JavaScript.
 
-3. **Making Blog Posts**: This is my first blog post! I now have Astro pages and Markdown posts!
+Astro is built for the complete other side of the spectrum. It minimizes the amount of JavaScript sent
+down to the client and renders the HTML markup on the server first, making the website incredibly
+lightweight, responsive, and SEO-friendly. It even allows me to install by beloved React and render
+React-based components directly from `.astro` files as "client islands"!
 
-## What's next
-
-I will finish the Astro tutorial, and then keep adding more posts. Watch this space for more to come.
-
-what's wrong with this rendering engine???
+It all comes down to the classic debate of "where should I render?" Frameworks like React generally
+sit in the single-page app (SPA) group, where the JS is sent down to the browser, and the browser
+handles things on the client. Astro sits on the complete other side of the spectrum and focuses on
+multi-page apps (MPAs), keeping the rendering on the server and sending down the markup.

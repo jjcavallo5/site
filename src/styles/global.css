@@ -1,5 +1,6 @@
 @import 'tailwindcss';
 @import './nerd-fonts-generated.css';
+@plugin '@tailwindcss/typography';
 
 @theme {
   --color-bg: #1a1b26;
@@ -9,6 +10,7 @@
   --color-light-gray: #394b70;
   --color-dark-gray: #283457;
   --color-purple: #bb9af7;
+  --color-blue: #7dcfff;
   --color-blue-muted: #3d59a1;
   --color-yellow: #e0af68;
   --color-teal: #2ac3de;
@@ -80,6 +82,21 @@
   .no-scrollbar {
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
+  }
+
+  .thin-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-fg-muted) transparent;
+  }
+  .thin-scrollbar::-webkit-scrollbar {
+    width: 4px;
+  }
+  .thin-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .thin-scrollbar::-webkit-scrollbar-thumb {
+    background: var(--color-fg-muted);
+    border-radius: 2px;
   }
 }
 

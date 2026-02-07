@@ -1,10 +1,21 @@
 ---
 import { getCollection } from "astro:content";
 import { formatDate } from "@/lib/utils";
+import RegisterTerminalCommands from "./register-terminal-commands";
+
 const posts = (await getCollection("blog")).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
 ---
+
+<RegisterTerminalCommands
+  client:load
+  commands={posts.map((post, idx) => ({
+    command: `b${idx}`,
+    help: `Go to ${post.data.title}`,
+    route: `/blog/${post.id}`,
+  }))}
+/>
 
 <ul>
   {

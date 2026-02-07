@@ -1,8 +1,27 @@
 ---
 import { fetchRecentRepositories } from "@/lib/github";
 import { formatDate } from "@/lib/utils";
+import RegisterTerminalCommands from "./register-terminal-commands";
 const repos = await fetchRecentRepositories(3);
 ---
+
+<RegisterTerminalCommands
+  client:load
+  commands={[
+    {
+      command: "p0",
+      help: "Go to Contractory",
+      route: "https://contractory-app.com",
+      isExternal: true,
+    },
+    ...repos.map((repo, idx) => ({
+      command: `p${idx + 1}`,
+      help: `Go to ${repo.name}`,
+      route: repo.url,
+      isExternal: true,
+    })),
+  ]}
+/>
 
 <ul>
   <li class="flex flex-row justify-between items-center group my-4 gap-2">

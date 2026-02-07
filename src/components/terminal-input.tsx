@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { execute } from "@/lib/terminal";
 import { navigate } from "astro:transitions/client";
 
 const validCommands = [
@@ -23,25 +24,26 @@ const TerminalInput = () => {
   const [error, setError] = useState("");
 
   const onSubmit = () => {
-    if (!validCommands.includes(val)) {
-      setError("Invalid command");
-      setVal("");
-      return;
-    }
-    if (val.includes("blog") || val === "2") {
-      setError("");
-      setVal("");
-      return navigate("/blog");
-    }
-    if (val.includes("projects") || val === "3") {
-      setError("");
-      setVal("");
-      return navigate("/projects");
-    }
+    execute(val);
+    // if (!validCommands.includes(val)) {
+    //   setError("Invalid command");
+    //   setVal("");
+    //   return;
+    // }
+    // if (val.includes("blog") || val === "2") {
+    //   setError("");
+    //   setVal("");
+    //   return navigate("/blog");
+    // }
+    // if (val.includes("projects") || val === "3") {
+    //   setError("");
+    //   setVal("");
+    //   return navigate("/projects");
+    // }
 
     setError("");
     setVal("");
-    navigate("/");
+    // navigate("/");
   };
 
   useEffect(() => {
@@ -64,7 +66,7 @@ const TerminalInput = () => {
         return;
       }
 
-      if (/^[a-zA-Z0-9~/ ]$/.test(key)) {
+      if (/^[a-zA-Z0-9~/ .]$/.test(key)) {
         setVal((v) => v + key);
         return;
       }

@@ -3,6 +3,7 @@ import "@/styles/global.css";
 import GithubGraph from "./home/github-graph.astro";
 import RecentBlogs from "./home/recent-blogs.astro";
 import ProjectsList from "./home/projects-list.astro";
+import RegisterTerminalCommands from "./home/register-terminal-commands";
 ---
 
 <main class="flex flex-col w-full max-w-[1120px] justify-self-center">
@@ -14,6 +15,7 @@ import ProjectsList from "./home/projects-list.astro";
     <GithubGraph />
   </section>
   <section id="links" class="flex flex-col sm:flex-row w-full">
+    <RegisterTerminalCommands client:load />
     <section id="blog-posts" class="flex-1 p-8">
       <h2 class="text-xl text-teal italic font-bold">Recent Blog Posts</h2>
       <RecentBlogs />

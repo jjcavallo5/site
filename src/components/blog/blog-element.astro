@@ -1,0 +1,34 @@
+---
+interface Props {
+  title: string;
+  postedAt: string;
+  description: string;
+  url: string;
+  command: string;
+}
+
+const { title, postedAt, description, url, command } = Astro.props;
+---
+
+<li class="flex flex-row justify-between items-center group my-4 gap-2">
+  <a href={url} target="_blank" class="flex flex-col">
+    <h3
+      class="text-xl text-teal italic font-bold group-hover:text-purple ease-in-out transition duration-500"
+    >
+      {title}
+    </h3>
+    <p
+      class="text-md text-fg-muted group-hover:text-fg ease-in-out transition duration-500"
+    >
+      Posted: {postedAt} &bull;{" "}
+      {description}
+    </p>
+    <h4
+      class="text-md text-fg-muted italic group-hover:text-fg ease-in-out transition duration-500"
+    >
+      ~{url}
+      <i class="nf nf-fa-arrow_right"></i>
+    </h4>
+  </a>
+  <p class="italic text-purple">{command}</p>
+</li>

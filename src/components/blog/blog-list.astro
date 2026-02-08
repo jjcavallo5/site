@@ -1,0 +1,33 @@
+---
+import { getCollection } from "astro:content";
+import { formatDate } from "@/lib/utils";
+import BlogElement from "./blog-element.astro";
+import RegisterTerminalCommands from "../home/register-terminal-commands";
+
+const posts = (await getCollection("blog")).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+---
+
+<RegisterTerminalCommands
+  client:load
+  commands={posts.map((post, idx) => ({
+    command: `b${idx}`,
+    help: `Go to ${post.data.title}`,
+    route: `/blog/${post.id}`,
+  }))}
+/>
+
+<ul>
+  {
+    posts.map((post, idx) => (
+      <BlogElement
+        title={post.data.title}
+        description={post.data.description}
+        postedAt={formatDate(post.data.pubDate)}
+        url={`/blog/${post.id}`}
+        command={`b${idx}`}
+      />
+    ))
+  }
+</ul>

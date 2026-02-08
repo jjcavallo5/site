@@ -1,12 +1,14 @@
 ---
 import Layout from "@/layouts/Layout.astro";
+import BlogList from "@/components/blog/blog-list.astro";
 ---
 
 <Layout>
   <main>
-    <section id="hero">
-      <h1 class="text-fg">Welcome to my blog.</h1>
-      <section id="links"></section>
-    </section>
+    <h1 class="text-purple italic text-3xl font-bold">Built at Runtime</h1>
+    <p class="text-fg-muted">
+      Read about software, running, and anything else I'm thinking about
+    </p>
+    <BlogList />
   </main>
 </Layout>

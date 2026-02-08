@@ -35,3 +35,37 @@ It all comes down to the classic debate of "where should I render?" Frameworks l
 sit in the single-page app (SPA) group, where the JS is sent down to the browser, and the browser
 handles things on the client. Astro sits on the complete other side of the spectrum and focuses on
 multi-page apps (MPAs), keeping the rendering on the server and sending down the markup.
+
+## The Hard Parts
+
+One thing I struggled with while creating the website that hosts this blog is building the mental model
+for where code runs. In React, I'm used to being able to not have to think about these things - React
+usually just runs in the browser no matter what (of course, until you start using full-stack frameworks 
+like NextJS, but even then you have to declare where code runs with their 'use client' and 'use server' 
+directives). With Astro, there was a learning curve to figuring out where things run.
+
+I ran into this while rendering a React Client Island in my
+code. On this site, the terminal input is a React Island. When I was building the blog list, I
+wanted to register the command shortcuts (like the `b0`) with the terminal component. In my first
+attempt, my thought was to just pass a key-value pair to the input, where the key was the command,
+and the value was the function to run when that command was called:
+
+```tsx
+// blog-list.astro
+<TerminalInput
+  commands={[
+    ...
+    {'b0': () => navigate('/blog/learning-astro')}
+    ...
+  ]}
+/>
+```
+
+However, this causes an issue: even though I'm passing the function through to the `TerminalInput`
+component, it isn't as simple as just calling the passed function from that component. That's
+because the `blog-list.astro` file is rendered on the _server_, and thus, the function stub
+exists only on the server. Since functions aren't JSON serializable, they can't be passed directly
+from the server to the client, so the function came through as undefined.
+
+The fix for this was simple - just pass the route stub instead of the function itself. But
+this is just an example of how Astro differs from what I'm used to with pure React.

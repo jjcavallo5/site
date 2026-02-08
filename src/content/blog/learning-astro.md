@@ -88,11 +88,18 @@ blog posts, and projects:
 After the navigation request is first sent, the user has to wait ~600ms for the page to finally
 load. That is an eternity!
 
-Now of course, there is a way around this (which I implemented after finding this issue), but
+There is a way around this (which I implemented after finding this issue), but
 it's not very pretty. It requires a third-party adapter for your hosting provider (Netlify, Vercel,
 Cloudflare, or  Node), a `server:defer` prop passed to the blocking component, and if you don't
-want that attrocious pop-in, you need to handle the loading state in the component. This is done
-through another magic prop in the child, where you have to tag fallback elements with a
+want that attrocious pop-in, you need to handle the loading state. This is done
+through another magic prop in the child of the defered component, where you have to tag fallback element with a
 `slot="fallback"` prop. Overall a lot of magic syntax and clunky APIs that aren't very scalable
 compared to the elegance of React's new async model.
 
+## Final Thoughts
+
+Building my first project with Astro was fun. I haven't learned a new framework in a while, and I've
+never used something that deviates significantly from React. I don't think I learned it well enough
+from building this simple website to have a strong say on it, but for it's targeted use-case,
+it works really well. Building like this brought me back to my roots: it felt closer to programming
+using vanilla JS and HTML/CSS than building a complex web app with modern React meta-frameworks.

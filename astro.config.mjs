@@ -17,6 +17,8 @@ export default defineConfig({
         codeBackground: "#24273a",
         frames: {
           editorActiveTabBackground: "#24273a",
+          terminalBackground: "#24273a",
+          terminalTitlebarBackground: "#24273a",
           tooltipSuccessBackground: "#3d59a1",
         },
       },
@@ -35,3 +37,4 @@ export default defineConfig({
 
   adapter: netlify(),
 });
+

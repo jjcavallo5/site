@@ -1,9 +1,12 @@
 ---
 import type { ContributionCalendarDay } from "@/lib/github";
 import { cn, formatGithubDate } from "@/lib/utils";
-interface Props extends ContributionCalendarDay {}
+interface Props extends ContributionCalendarDay {
+  animationDelay?: number;
+}
 
-const { contributionCount, contributionLevel, date } = Astro.props;
+const { contributionCount, contributionLevel, date, animationDelay } =
+  Astro.props;
 
 const getColor = () => {
   if (contributionLevel === "NONE") return "bg-dark-gray";

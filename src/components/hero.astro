@@ -1,6 +1,7 @@
 ---
 import "@/styles/global.css";
 import GithubGraph from "./home/github-graph.astro";
+import GithubGraphFallback from "./home/github-graph-fallback.astro";
 import RecentBlogs from "./home/recent-blogs.astro";
 import ProjectsList from "./home/projects-list.astro";
 import RegisterTerminalCommands from "./home/register-terminal-commands";
@@ -12,7 +13,9 @@ import RegisterTerminalCommands from "./home/register-terminal-commands";
     class="flex flex-col p-8 border-dashed border-b-[1px] border-dark-gray"
   >
     <h1 class="text-3xl text-purple italic font-bold">Jeremy Cavallo</h1>
-    <GithubGraph server:defer />
+    <GithubGraph server:defer>
+      <GithubGraphFallback slot="fallback" />
+    </GithubGraph>
   </section>
   <section id="links" class="flex flex-col sm:flex-row w-full">
     <RegisterTerminalCommands client:load />

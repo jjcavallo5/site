@@ -1,0 +1,26 @@
+---
+import GithubCalendarDay from "./github-calendar-day.astro";
+---
+
+<div class="mt-4">
+  <p class="text-fg mb-2">0 contributions in the past year</p>
+  <div class="relative">
+    <div class="flex flex-row overflow-x-auto">
+      {
+        Array.from({ length: 53 }).map(() => (
+          <div class="flex flex-col gap-[4px] w-[20px]">
+            {Array.from({ length: 7 }).map(() => (
+              <GithubCalendarDay
+                contributionCount={0}
+                contributionLevel="NONE"
+                color="#fff"
+                date="Jan 01"
+                weekday={0}
+              />
+            ))}
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</div>

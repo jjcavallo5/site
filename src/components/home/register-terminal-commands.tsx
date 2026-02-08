@@ -3,7 +3,7 @@ import { registerCommand } from "@/lib/terminal";
 import { navigate } from "astro:transitions/client";
 
 type RegisterCommandProps = {
-  commands: {
+  commands?: {
     command: string;
     help: string;
     route: string;
@@ -13,8 +13,7 @@ type RegisterCommandProps = {
 
 const RegisterTerminalCommands = ({ commands }: RegisterCommandProps) => {
   useEffect(() => {
-    console.log(commands);
-    commands.forEach((cmd) =>
+    commands?.forEach((cmd) =>
       registerCommand({
         command: cmd.command,
         help: cmd.help,

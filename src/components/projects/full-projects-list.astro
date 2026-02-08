@@ -1,0 +1,48 @@
+---
+import { fetchRecentRepositories } from "@/lib/github";
+import { formatDate, formatGithubDate } from "@/lib/utils";
+import RegisterTerminalCommands from "../home/register-terminal-commands";
+import Project from "./project.astro";
+
+const repos = await fetchRecentRepositories();
+---
+
+<RegisterTerminalCommands
+  client:load
+  commands={[
+    {
+      command: "p0",
+      help: "Go to Contractory",
+      route: "https://contractory-app.com",
+      isExternal: true,
+    },
+    ...repos.map((repo, idx) => ({
+      command: `p${idx + 1}`,
+      help: `Go to ${repo.name}`,
+      route: repo.url,
+      isExternal: true,
+    })),
+  ]}
+/>
+
+<ul>
+  <Project
+    name="contractory"
+    url="https://contractory-app.com"
+    description="Platform for connecting homeowners with contractors for home improvement projects"
+    updatedAt={formatDate(new Date())}
+    command="p0"
+    pinned
+  />
+  {
+    repos.map((repo, idx) => (
+      <Project
+        name={repo.name}
+        url={repo.url}
+        description={repo.description ?? ""}
+        updatedAt={formatGithubDate(repo.updatedAt)}
+        command={`p${idx + 1}`}
+      />
+    ))
+  }
+</ul>

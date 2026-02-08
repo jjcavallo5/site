@@ -10,7 +10,6 @@ export const commands = new Map<string, Command>();
 export const execute = (command: string) => {
   const cmd = commands.get(command);
   if (!cmd) return "Invalid command";
-  console.log(cmd);
   cmd.run();
 };
 
@@ -23,7 +22,6 @@ export const registerCommand = ({
   help: string;
   run: () => void;
 }) => {
-  console.log(command, help, run);
   commands.set(command, { help, run });
 };
 
@@ -62,7 +60,7 @@ for (const cmd of ["projects", "cd projects", "3"]) {
 }
 
 // Back commands
-for (const cmd of ["cd ..", "back", "close"]) {
+for (const cmd of ["cd ..", "cd ../", "back", "close"]) {
   commands.set(cmd, {
     help: "Go back",
     run: () => (history.length > 0 ? history.back() : null),

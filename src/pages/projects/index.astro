@@ -1,12 +1,12 @@
 ---
 import Layout from "@/layouts/Layout.astro";
+import FullProjectsList from "@/components/projects/full-projects-list.astro";
 ---
 
 <Layout>
-  <main>
-    <section id="hero">
-      <h1 class="text-fg">Here are some things I'm working on.</h1>
-      <section id="links"></section>
-    </section>
+  <main class="max-w-192">
+    <h1 class="text-purple italic text-3xl font-bold">My Work</h1>
+    <p class="text-fg-muted mb-8">Here are some things I've been working on</p>
+    <FullProjectsList />
   </main>
 </Layout>

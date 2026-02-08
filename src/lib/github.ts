@@ -180,9 +180,7 @@ const recentReposQuery = `query($count: Int!) {
   }
 }`;
 
-export async function fetchRecentRepositories(
-  count: number = 5,
-): Promise<Repository[]> {
+export async function fetchRecentRepositories(): Promise<Repository[]> {
   const token = import.meta.env.GITHUB_TOKEN;
   if (!token) {
     throw new Error("GITHUB_TOKEN environment variable is not set");
@@ -216,6 +214,5 @@ export async function fetchRecentRepositories(
 
   return json.data.viewer.repositoriesContributedTo.nodes
     .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt))
-    .filter((repo) => !repo.isPrivate)
-    .slice(0, count);
+    .filter((repo) => !repo.isPrivate);
 }

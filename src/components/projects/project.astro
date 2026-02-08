@@ -1,0 +1,36 @@
+---
+interface Props {
+  name: string;
+  url: string;
+  updatedAt: string;
+  description: string;
+  command: string;
+  pinned?: boolean;
+}
+
+const { name, url, updatedAt, description, command, pinned } = Astro.props;
+---
+
+<li class="flex flex-row justify-between items-center group my-4 gap-2">
+  <a href={url} target="_blank" class="flex flex-col">
+    <h3
+      class="text-xl text-teal italic font-bold group-hover:text-purple ease-in-out transition duration-500"
+    >
+      {pinned && <i class="nf nf-oct-pin" />}
+      {name}
+    </h3>
+    <p
+      class="text-md text-fg-muted group-hover:text-fg ease-in-out transition duration-500"
+    >
+      Last Updated {updatedAt} &bull;{" "}
+      {description}
+    </p>
+    <h4
+      class="text-md text-fg-muted italic group-hover:text-fg ease-in-out transition duration-500"
+    >
+      {url}
+      <i class="nf nf-fa-arrow_right"></i>
+    </h4>
+  </a>
+  <p class="italic text-purple">{command}</p>
+</li>

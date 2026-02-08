@@ -21,29 +21,12 @@ const validCommands = [
 
 const TerminalInput = () => {
   const [val, setVal] = useState("");
-  const [error, setError] = useState("");
+  const [error, setError] = useState<string | undefined>();
 
   const onSubmit = () => {
-    execute(val);
-    // if (!validCommands.includes(val)) {
-    //   setError("Invalid command");
-    //   setVal("");
-    //   return;
-    // }
-    // if (val.includes("blog") || val === "2") {
-    //   setError("");
-    //   setVal("");
-    //   return navigate("/blog");
-    // }
-    // if (val.includes("projects") || val === "3") {
-    //   setError("");
-    //   setVal("");
-    //   return navigate("/projects");
-    // }
-
-    setError("");
+    const error = execute(val);
+    setError(error);
     setVal("");
-    // navigate("/");
   };
 
   useEffect(() => {

@@ -69,3 +69,30 @@ from the server to the client, so the function came through as undefined.
 
 The fix for this was simple - just pass the route stub instead of the function itself. But
 this is just an example of how Astro differs from what I'm used to with pure React.
+
+## Where Astro Struggles
+
+In 2026, creating a strictly static website is rare. There are usually things you need to
+do outside of HTML and CSS to engage users and craft a pleasant user experience, even if
+the content itself is mostly static. 
+
+With Astro, things break down quickly when you want to start doing anything beyond rendering
+HTML. As soon as TypeScript is involved, Astro loses it's magic. Data fetching happens on the
+server and is blocking, meaning any _page_ that fetches data (yes, the whole page, even if the
+fetch is in a child component) doesn't get sent down until that fetch resolves. Look at the
+performance tab when I load the home page, which has to fetch my contributions from GitHub, recent
+blog posts, and projects:
+
+![Performance trace of home page load](../../assets/learning-astro/performance-tab.png)
+
+After the navigation request is first sent, the user has to wait ~600ms for the page to finally
+load. That is an eternity!
+
+Now of course, there is a way around this (which I implemented after finding this issue), but
+it's not very pretty. It requires a third-party adapter for your hosting provider (Netlify, Vercel,
+Cloudflare, or  Node), a `server:defer` prop passed to the blocking component, and if you don't
+want that attrocious pop-in, you need to handle the loading state in the component. This is done
+through another magic prop in the child, where you have to tag fallback elements with a
+`slot="fallback"` prop. Overall a lot of magic syntax and clunky APIs that aren't very scalable
+compared to the elegance of React's new async model.
+

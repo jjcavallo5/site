@@ -5,6 +5,8 @@ import react from "@astrojs/react";
 
 import expressiveCode from "astro-expressive-code";
 
+import netlify from "@astrojs/netlify";
+
 // https://astro.build/config
 export default defineConfig({
   integrations: [
@@ -20,13 +22,16 @@ export default defineConfig({
       },
     }),
   ],
+
   vite: {
     plugins: [tailwindcss()],
   },
+
   markdown: {
     shikiConfig: {
       theme: "tokyo-night",
     },
   },
-});
 
+  adapter: netlify(),
+});

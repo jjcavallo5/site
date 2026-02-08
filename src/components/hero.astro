@@ -12,20 +12,20 @@ import RegisterTerminalCommands from "./home/register-terminal-commands";
     class="flex flex-col p-8 border-dashed border-b-[1px] border-dark-gray"
   >
     <h1 class="text-3xl text-purple italic font-bold">Jeremy Cavallo</h1>
-    <GithubGraph />
+    <GithubGraph server:defer />
   </section>
   <section id="links" class="flex flex-col sm:flex-row w-full">
     <RegisterTerminalCommands client:load />
     <section id="blog-posts" class="flex-1 p-8">
       <h2 class="text-xl text-teal italic font-bold">Recent Blog Posts</h2>
-      <RecentBlogs />
+      <RecentBlogs server:defer />
     </section>
     <section
       id="projects"
       class="flex-1 p-8 border-dashed sm:border-l-[1px] sm:border-t-[0px] border-t-[1px] border-dark-gray w-full"
     >
       <h2 class="text-xl text-teal italic font-bold">Projects</h2>
-      <ProjectsList limit={2} />
+      <ProjectsList server:defer />
     </section>
   </section>
 </main>

@@ -66,3 +66,11 @@ for (const cmd of ["cd ..", "cd ../", "back", "close"]) {
     run: () => (history.length > 0 ? history.back() : null),
   });
 }
+
+// Refresh commands
+for (const cmd of ["refresh", "reload", "restart", "r"]) {
+  commands.set(cmd, {
+    help: "Go back",
+    run: () => location.reload(),
+  });
+}

@@ -11,7 +11,7 @@ interface Props {
 const { title, published, author } = Astro.props;
 ---
 
-<Layout>
+<Layout title={title}>
   <main class="h-full flex flex-col overflow-y-auto thin-scrollbar">
     <div class="max-w-[85ch] self-center flex-1 px-2 mt-8 pb-32">
       <h1 class="text-purple text-3xl italic font-bold">{title}</h1>

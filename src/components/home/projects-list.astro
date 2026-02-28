@@ -5,6 +5,7 @@ import RegisterTerminalCommands from "./register-terminal-commands";
 const repos = (await fetchRecentRepositories()).slice(0, 2);
 ---
 
+<div class="animate-fade-in">
 <RegisterTerminalCommands
   client:load
   commands={[
@@ -56,3 +57,4 @@ const repos = (await fetchRecentRepositories()).slice(0, 2);
     ))
   }
 </ul>
+</div>

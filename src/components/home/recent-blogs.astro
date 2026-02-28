@@ -9,6 +9,7 @@ const posts = (await getCollection("blog"))
   .slice(0, 3);
 ---
 
+<div class="animate-fade-in">
 <RegisterTerminalCommands
   client:load
   commands={posts.map((post, idx) => ({
@@ -38,3 +39,4 @@ const posts = (await getCollection("blog"))
     ))
   }
 </ul>
+</div>

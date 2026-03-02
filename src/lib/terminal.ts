@@ -70,7 +70,15 @@ for (const cmd of ["cd ..", "cd ../", "back", "close"]) {
 // Refresh commands
 for (const cmd of ["refresh", "reload", "restart", "r"]) {
   commands.set(cmd, {
-    help: "Go back",
+    help: "Refresh page",
     run: () => location.reload(),
   });
 }
+
+// Help command
+commands.set("help", {
+  help: "Show available commands",
+  run: () => {
+    window.dispatchEvent(new CustomEvent("show-help"));
+  },
+});

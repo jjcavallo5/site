@@ -80,8 +80,14 @@ const TerminalInput = () => {
 
   return (
     <>
-      <div className="flex flex-row ml-2">
+      <div className="flex flex-row ml-2 items-center">
         <pre className="text-fg text-xl">{val}</pre>
+        <div className="h-6 w-[12px] animate-blink bg-fg"></div>
+        {val === "" && (
+          <span className="text-fg-muted text-xl pointer-events-none select-none ml-2">
+            Type 'help' to view commands
+          </span>
+        )}
       </div>
 
       {showHelp && (

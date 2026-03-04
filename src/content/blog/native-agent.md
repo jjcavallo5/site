@@ -1,0 +1,69 @@
+---
+layout: "../../layouts/BlogLayout.astro"
+title: "Introducing Native Agent"
+pubDate: 2026-03-02
+description: "Let your agent control your app from a CLI"
+author: "Jeremy Cavallo"
+tags: ["native", "ios", "android", "agents"]
+---
+
+A couple of weeks ago, I had a phone call with a good friend, Nate Sesti. He's
+the CTO over at [Continue](https://continue.dev), so naturally, he's at the
+forefront of agentic coding, and knows far more about how to properly utilize
+these tools than I do. In our talk, he mentioned Vercel's package
+[agent-browser](https://agent-browser.dev/), and how giving agents access to the
+browser enables them to work for longer without needing their "human" to guide
+them. The idea is that if an agent can use your app, it can run QA cycles itself
+and catch errors, resulting in a better product by the time you look at the
+result.
+
+I felt a little bit left out. [Contractory](https://contractory-app.com) is a
+mobile app, and it seems like the current agentic tools are lagging a bit in the
+native world when compared to the web. I scoured the web and found a few
+interesting tools that may have worked (most noteable was
+[Droid](https://droidrun.ai/)), but none of them were as easy to set up and
+clean as Vercel's solution for the web.
+
+That's when Native Agent was born. I decided that, instead of trying to figure
+out how to mold some existing product to work for my use-case, I'd just let
+Claude loose and build my own solution.
+
+## Defining the Requirements
+
+I wanted Native Agent to be easy to use, not for a human, but an agent. Building
+like this is an interesting mindset shift from normal development. The outputs
+of the tool don't necessarily need to look pretty, but they do need to be
+structured and carry enough context for the model to track. The natural solution
+was a CLI, which the model could call itself. The goal was to have the human
+give the agent access to the tool, either just by telling it about its existence
+or adding the Native Agent skill, and the model would be able to figure things
+out from there.
+
+Initially, I thought of a minimal set of actions that the model should be able
+to take to interact with the device:
+
+- `click` - click a button, based on a text label
+- `type` - enter text into an input, selected based on it's label
+- `view` - return a screenshot of the phone to the agent
+
+I figured if the model could do these things, it would be a good start.
+
+Interestingly, this is about as much thought as I put into requirements. It's
+2026 - I'll just let the model figure it out, right?
+
+## MVP
+
+When I started development, I thought the hardest part was going to be figuring
+out all of the `adb` commands to interact with the device programmatically and
+get the results back to the CLI. As it turns out, this problem is solved.
+[Appium](https://appium.io/docs/en/latest/) is a _super_ cool open source
+project that lets you interact with pretty much any device programmatically.
+Because of them, building Native Agent was almost trivial. All I needed to do
+was convert a CLI command into something Appium could understand, and then
+convert the outputs from Appium back into something the agent can understand.
+Appium abstracts away the device, so moving from Android to iOS is as simple as
+installing a new driver and toggling it with a CLI flag.
+
+<div style="display: flex; justify-content: center;">
+  <img src="/src/assets/native-agent/native-agent-architecture.png" width="350" />
+</div>

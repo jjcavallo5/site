@@ -26,6 +26,7 @@ const TerminalInput = () => {
     const onShowHelp = () => {
       setShowHelp(true);
       requestAnimationFrame(() => setHelpVisible(true));
+      window.posthog?.capture("help_menu_opened");
 
       const timer = setTimeout(dismissHelp, 15000);
       return () => clearTimeout(timer);
@@ -38,6 +39,13 @@ const TerminalInput = () => {
   const onSubmit = useCallback(() => {
     if (showHelp) dismissHelp();
     const error = execute(val);
+    if (val.trim()) {
+      if (error) {
+        window.posthog?.capture("terminal_command_invalid", { command: val });
+      } else {
+        window.posthog?.capture("terminal_command_executed", { command: val });
+      }
+    }
     setVal("");
   }, [val, showHelp, dismissHelp]);
 

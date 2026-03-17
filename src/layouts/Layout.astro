@@ -2,6 +2,7 @@
 import "@/styles/global.css";
 import BottomNav from "@/components/bottom-nav/bottom-nav.astro";
 import { ClientRouter } from "astro:transitions";
+import PostHog from "@/components/posthog.astro";
 
 interface Props {
   title?: string;
@@ -18,7 +19,9 @@ const {
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.url.origin);
-const ogImageURL = ogImage ? new URL(ogImage, Astro.url.origin).href : undefined;
+const ogImageURL = ogImage
+  ? new URL(ogImage, Astro.url.origin).href
+  : undefined;
 ---
 
 <!doctype html>
@@ -29,7 +32,13 @@ const ogImageURL = ogImage ? new URL(ogImage, Astro.url.origin).href : undefined
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" />
     <meta name="generator" content={Astro.generator} />
-    <link rel="preload" href="/fonts/FiraCodeNerdFont-Regular.woff2" as="font" type="font/woff2" crossorigin />
+    <link
+      rel="preload"
+      href="/fonts/FiraCodeNerdFont-Regular.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
     <link rel="canonical" href={canonicalURL} />
     <title>{title}</title>
     {description && <meta name="description" content={description} />}
@@ -38,11 +47,15 @@ const ogImageURL = ogImage ? new URL(ogImage, Astro.url.origin).href : undefined
     <meta property="og:url" content={canonicalURL} />
     {description && <meta property="og:description" content={description} />}
     {ogImageURL && <meta property="og:image" content={ogImageURL} />}
-    <meta name="twitter:card" content={ogImageURL ? "summary_large_image" : "summary"} />
+    <meta
+      name="twitter:card"
+      content={ogImageURL ? "summary_large_image" : "summary"}
+    />
     <meta name="twitter:title" content={title} />
     {description && <meta name="twitter:description" content={description} />}
     {ogImageURL && <meta name="twitter:image" content={ogImageURL} />}
     <ClientRouter />
+    <PostHog />
   </head>
   <body
     class="relative m-0 w-screen h-screen font-mono bg-bg text-fg overflow-hidden"

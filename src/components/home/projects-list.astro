@@ -6,55 +6,85 @@ const repos = (await fetchRecentRepositories()).slice(0, 2);
 ---
 
 <div class="animate-fade-in">
-<RegisterTerminalCommands
-  client:load
-  commands={[
-    {
-      command: "p0",
-      help: "Go to Contractory",
-      route: "https://contractory-app.com",
-      isExternal: true,
-    },
-    ...repos.map((repo, idx) => ({
-      command: `p${idx + 1}`,
-      help: `Go to ${repo.name}`,
-      route: repo.url,
-      isExternal: true,
-    })),
-  ]}
-/>
+  <RegisterTerminalCommands
+    client:load
+    commands={[
+      {
+        command: "p0",
+        help: "Go to Contractory",
+        route: "https://contractory-app.com",
+        isExternal: true,
+      },
+      ...repos.map((repo, idx) => ({
+        command: `p${idx + 1}`,
+        help: `Go to ${repo.name}`,
+        route: repo.url,
+        isExternal: true,
+      })),
+    ]}
+  />
 
-<ul>
-  <li class="flex flex-row justify-between items-center group my-4 gap-4">
-    <a href="https://contractory-app.com" target="_blank" class="flex flex-col">
-      <h4
-        class="text-lg text-fg group-hover:text-purple ease-in-out transition duration-500"
+  <ul>
+    <li class="flex flex-row justify-between items-center group my-4 gap-4">
+      <a
+        href="https://contractory-app.com"
+        target="_blank"
+        class="flex flex-col"
+        data-project-link
+        data-project-name="Contractory"
       >
-        <i class="nf nf-oct-pin mr-4"></i>Contractory
-      </h4>
-      <p
-        class="text-md text-fg-muted group-hover:text-fg ease-in-out transition duration-500"
-      >
-        {formatDate(new Date())} &bull; Platform for connecting homeowners with contractors
-        for home improvement projects
-      </p>
-    </a>
-    <p class="italic text-purple">p0</p>
-  </li>
-  {
-    repos.map((repo, idx) => (
-      <li class="flex flex-row justify-between items-center group my-4 gap-2">
-        <a href={repo.url} target="_blank" class="flex flex-col">
-          <h4 class="text-lg text-fg group-hover:text-purple ease-in-out transition duration-500">
-            {repo.name}
-          </h4>
-          <p class="text-md text-fg-muted group-hover:text-fg ease-in-out transition duration-500">
-            {formatDate(new Date(repo.updatedAt))} &bull; {repo.description}
-          </p>
-        </a>
-        <p class="italic text-purple">p{idx + 1}</p>
-      </li>
-    ))
-  }
-</ul>
+        <h4
+          class="text-lg text-fg group-hover:text-purple ease-in-out transition duration-500"
+        >
+          <i class="nf nf-oct-pin mr-4"></i>Contractory
+        </h4>
+        <p
+          class="text-md text-fg-muted group-hover:text-fg ease-in-out transition duration-500"
+        >
+          {formatDate(new Date())} &bull; Platform for connecting homeowners with
+          contractors for home improvement projects
+        </p>
+      </a>
+      <p class="italic text-purple">p0</p>
+    </li>
+    {
+      repos.map((repo, idx) => (
+        <li class="flex flex-row justify-between items-center group my-4 gap-2">
+          <a
+            href={repo.url}
+            target="_blank"
+            class="flex flex-col"
+            data-project-link
+            data-project-name={repo.name}
+          >
+            <h4 class="text-lg text-fg group-hover:text-purple ease-in-out transition duration-500">
+              {repo.name}
+            </h4>
+            <p class="text-md text-fg-muted group-hover:text-fg ease-in-out transition duration-500">
+              {formatDate(new Date(repo.updatedAt))} &bull; {repo.description}
+            </p>
+          </a>
+          <p class="italic text-purple">p{idx + 1}</p>
+        </li>
+      ))
+    }
+  </ul>
 </div>
+
+<script is:inline>
+  function setupProjectTracking() {
+    document.querySelectorAll("[data-project-link]").forEach((link) => {
+      link.removeEventListener("click", link._phClickHandler);
+      link._phClickHandler = function () {
+        window.posthog?.capture("project_link_clicked", {
+          project_name: link.getAttribute("data-project-name"),
+          project_url: link.getAttribute("href"),
+        });
+      };
+      link.addEventListener("click", link._phClickHandler);
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", setupProjectTracking);
+  document.addEventListener("astro:page-load", setupProjectTracking);
+</script>

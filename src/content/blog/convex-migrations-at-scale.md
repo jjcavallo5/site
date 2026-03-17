@@ -7,6 +7,7 @@ description:
   development"
 author: "Jeremy Cavallo"
 tags: ["convex"]
+coverImage: "../../assets/convex-migrations-at-scale/migration-model.png"
 ---
 
 A few months ago, my company ([Contractory](https://contractory-app.com) - go

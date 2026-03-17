@@ -26,3 +26,23 @@ const ogImage = post.data.coverImage
 >
   <Content />
 </BlogLayout>
+
+<script
+  is:inline
+  define:vars={{
+    postId: post.id,
+    postTitle: post.data.title,
+    postAuthor: post.data.author,
+  }}
+>
+  function trackBlogView() {
+    window.posthog?.capture("blog_post_viewed", {
+      post_id: postId,
+      post_title: postTitle,
+      post_author: postAuthor,
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", trackBlogView);
+  document.addEventListener("astro:page-load", trackBlogView);
+</script>

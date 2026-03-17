@@ -5,6 +5,7 @@ pubDate: 2026-02-06
 description: 'Writing a blog about creating a blog'
 author: 'Jeremy Cavallo'
 tags: ["astro"]
+coverImage: '../../assets/learning-astro/performance-tab.png'
 ---
 
 A few months ago, I started writing blogs. I always hated writing when I was in school, but now

@@ -7,6 +7,7 @@ pubDate: 2025-10-25
 description: "A technical deep-dive into the inner workings of Contractory"
 author: "Jeremy Cavallo"
 tags: ["convex", "expo"]
+coverImage: "../../assets/building-contractory/app-rewrite.png"
 ---
 
 A little over a year ago, Hani (our CEO) came to me with an idea: he wanted to

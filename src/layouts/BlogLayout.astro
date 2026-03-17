@@ -13,7 +13,7 @@ const { title, published, author } = Astro.props;
 
 <Layout title={title}>
   <main class="h-full flex flex-col overflow-y-auto thin-scrollbar">
-    <div class="max-w-[85ch] self-center flex-1 px-2 mt-8 pb-32">
+    <div class="max-w-[85ch] self-center flex-1 px-2 mt-8">
       <h1 class="text-purple text-3xl italic font-bold">{title}</h1>
       <p class="text-fg-muted">{author} &bull; {formatDate(published)}</p>
       <div
@@ -31,6 +31,9 @@ const { title, published, author } = Astro.props;
       >
         <slot />
       </div>
+      <p class="text-fg-muted self-center text-center mt-8">
+        &COPY; Jeremy Cavallo - Detroit, MI
+      </p>
     </div>
   </main>
 </Layout>

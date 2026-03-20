@@ -1,6 +1,5 @@
 ---
 import { fetchRecentRepositories } from "@/lib/github";
-import { formatDate } from "@/lib/utils";
 import RegisterTerminalCommands from "./register-terminal-commands";
 const repos = (await fetchRecentRepositories()).slice(0, 2);
 ---
@@ -41,7 +40,7 @@ const repos = (await fetchRecentRepositories()).slice(0, 2);
         <p
           class="text-md text-fg-muted group-hover:text-fg ease-in-out transition duration-500"
         >
-          {formatDate(new Date())} &bull; Platform for connecting homeowners with
+          0 commits this week &bull; Platform for connecting homeowners with
           contractors for home improvement projects
         </p>
       </a>
@@ -61,7 +60,7 @@ const repos = (await fetchRecentRepositories()).slice(0, 2);
               {repo.name}
             </h4>
             <p class="text-md text-fg-muted group-hover:text-fg ease-in-out transition duration-500">
-              {formatDate(new Date(repo.updatedAt))} &bull; {repo.description}
+              {repo.weeklyCommits} {repo.weeklyCommits === 1 ? "commit" : "commits"} this week &bull; {repo.description}
             </p>
           </a>
           <p class="italic text-purple">p{idx + 1}</p>

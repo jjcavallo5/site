@@ -1,6 +1,5 @@
 ---
 import { fetchRecentRepositories } from "@/lib/github";
-import { formatDate } from "@/lib/utils";
 import RegisterTerminalCommands from "../home/register-terminal-commands";
 import Project from "./project.astro";
 
@@ -30,7 +29,7 @@ const repos = await fetchRecentRepositories();
     name="contractory"
     url="https://contractory-app.com"
     description="Platform for connecting homeowners with contractors for home improvement projects"
-    updatedAt={formatDate(new Date())}
+    weeklyCommits={0}
     command="p0"
     pinned
   />
@@ -40,7 +39,7 @@ const repos = await fetchRecentRepositories();
         name={repo.name}
         url={repo.url}
         description={repo.description ?? ""}
-        updatedAt={formatDate(new Date(repo.updatedAt))}
+        weeklyCommits={repo.weeklyCommits}
         command={`p${idx + 1}`}
       />
     ))

@@ -62,6 +62,7 @@ export interface Repository {
   isPrivate: boolean;
   isFork: boolean;
   updatedAt: string;
+  weeklyCommits: number;
 }
 
 interface GitHubContributionsResponse {
@@ -138,23 +139,43 @@ export async function fetchGitHubContributions(): Promise<ContributionsCollectio
   return json.data.viewer.contributionsCollection;
 }
 
+interface GitHubRepositoryNode {
+  name: string;
+  nameWithOwner: string;
+  description: string | null;
+  url: string;
+  stargazerCount: number;
+  forkCount: number;
+  primaryLanguage: RepositoryLanguage | null;
+  owner: RepositoryOwner;
+  isPrivate: boolean;
+  isFork: boolean;
+  updatedAt: string;
+  defaultBranchRef: {
+    target: {
+      history: {
+        totalCount: number;
+      };
+    };
+  } | null;
+}
+
 interface GitHubRepositoriesResponse {
   data: {
     viewer: {
-      repositoriesContributedTo: {
-        nodes: Repository[];
+      repositories: {
+        nodes: GitHubRepositoryNode[];
       };
     };
   };
   errors?: { message: string }[];
 }
 
-const recentReposQuery = `query($count: Int!) {
+const recentReposQuery = `query($count: Int!, $since: GitTimestamp!) {
   viewer {
-    repositoriesContributedTo(
+    repositories(
       first: $count
-      includeUserRepositories: true
-      contributionTypes: [COMMIT, PULL_REQUEST, ISSUE, PULL_REQUEST_REVIEW]
+      ownerAffiliations: [OWNER]
       orderBy: { field: PUSHED_AT, direction: DESC }
     ) {
       nodes {
@@ -175,6 +196,15 @@ const recentReposQuery = `query($count: Int!) {
         isPrivate
         isFork
         updatedAt
+        defaultBranchRef {
+          target {
+            ... on Commit {
+              history(since: $since) {
+                totalCount
+              }
+            }
+          }
+        }
       }
     }
   }
@@ -186,6 +216,9 @@ export async function fetchRecentRepositories(): Promise<Repository[]> {
     throw new Error("GITHUB_TOKEN environment variable is not set");
   }
 
+  const oneWeekAgo = new Date();
+  oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+
   const res = await fetch("https://api.github.com/graphql", {
     method: "POST",
     headers: {
@@ -194,7 +227,7 @@ export async function fetchRecentRepositories(): Promise<Repository[]> {
     },
     body: JSON.stringify({
       query: recentReposQuery,
-      variables: { count: 100 },
+      variables: { count: 100, since: oneWeekAgo.toISOString() },
     }),
   });
 
@@ -212,7 +245,11 @@ export async function fetchRecentRepositories(): Promise<Repository[]> {
     );
   }
 
-  return json.data.viewer.repositoriesContributedTo.nodes
-    .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt))
-    .filter((repo) => !repo.isPrivate);
+  return json.data.viewer.repositories.nodes
+    .filter((repo) => !repo.isPrivate)
+    .map((repo) => ({
+      ...repo,
+      weeklyCommits: repo.defaultBranchRef?.target?.history?.totalCount ?? 0,
+    }))
+    .sort((a, b) => b.weeklyCommits - a.weeklyCommits);
 }

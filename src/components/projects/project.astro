@@ -2,13 +2,13 @@
 interface Props {
   name: string;
   url: string;
-  updatedAt: string;
+  weeklyCommits: number;
   description: string;
   command: string;
   pinned?: boolean;
 }
 
-const { name, url, updatedAt, description, command, pinned } = Astro.props;
+const { name, url, weeklyCommits, description, command, pinned } = Astro.props;
 ---
 
 <li class="flex flex-row justify-between items-center group my-4 gap-2">
@@ -22,7 +22,7 @@ const { name, url, updatedAt, description, command, pinned } = Astro.props;
     <p
       class="text-md text-fg-muted group-hover:text-fg ease-in-out transition duration-500"
     >
-      Last Updated {updatedAt} &bull;{" "}
+      {weeklyCommits} {weeklyCommits === 1 ? "commit" : "commits"} this week &bull;{" "}
       {description}
     </p>
     <h4
